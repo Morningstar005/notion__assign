@@ -1,6 +1,9 @@
-const BASE_URL = import.meta.env.VITE_APP_BASE_URL
+const BASE_URL = 'http://localhost:9000/api/v1';
 //CATEGories APi
+console.log("BASE_URL:", BASE_URL); // Log it to check if the value is correct
+
 export const categories={
+  
   CATEGORIES_API: BASE_URL +"/course/showAllCategory"
 }
 

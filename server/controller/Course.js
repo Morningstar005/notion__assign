@@ -56,13 +56,21 @@ exports.createcourse = async (req, res) => {
     if (!status || status === undefined) {
       status = "Draft"
     }
-
+console.log('userId',userId)
+console.log(" form info ",  courseName,
+  courseDescription,
+  whatYouWillLearn,
+  price,
+  tag,
+  category,
+  status,
+  instructions)
     //check for instructor
     const instructorDetails = await User.findById(userId, {
       accountType: "Instructor",
     })
-
-    // console.log("Instructor Details: ", instructorDetails);
+    console.log("category: ", category);
+    console.log("Instructor Details: ", instructorDetails);
 
     if (!instructorDetails) {
       return res.status(404).json({
@@ -79,13 +87,15 @@ exports.createcourse = async (req, res) => {
         message: "Category Details Not Found",
       })
     }
-
+console.log('categoryDetails',categoryDetails)
 
        //Upload Image top Cloudinary
+       console.log('thumbnail',thumbnail)
        const thumbnailImage = await uploadImageToCloudinary(
         thumbnail,
         process.env.FOLDER_NAME
       )
+      console.log('yaha tak',thumbnailImage)
 
       const newCourse = await Course.create({
         courseName,
@@ -99,7 +109,7 @@ exports.createcourse = async (req, res) => {
         status: status,
         instructions:instructions,
       })
-
+console.log('newCourse',newCourse)
      //add the new course to the user schema of Instructor
      await User.findByIdAndUpdate(
       {

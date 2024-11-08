@@ -70,7 +70,9 @@ router.post("/getFullCourseDetails",auth,getFullCourseDetails)
 router.post("/updateCourseProgress",auth,isStudent,updateCourseProgess)
 //category routes(only by admin)
 
-router.post("/createCategory", auth, isAdmin, createCategory);
+// router.post("/createCategory", auth, isAdmin, createCategory);
+router.post("/createCategory", createCategory);
+
 router.get("/showAllCategory", showAllCategory);
 router.post("/categoryPageDetails", categoryPageDetails);
 

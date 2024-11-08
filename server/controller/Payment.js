@@ -57,12 +57,17 @@ exports.capturePayment = async (req, res) => {
 
   try {
  
-    const paymentResponse = await instance.orders.create(options);
+    await enrollStudents(courses, userId, res);
     // console.log(paymentResponse)
-    res.json({
+    return res.status(200).json({
       success: true,
-      message: paymentResponse,
+      message: "Enrollment successful without payment.",
     });
+
+    // res.json({
+    //   success: true,
+    //   message: paymentResponse,
+    // });
   } 
   
   catch (error) {

@@ -27,15 +27,16 @@ const Catalog = () => {
     },[catalogName])
 
     useEffect(()=>{
-        const getCategoryDetails = async()=>{
-            try{
-                const res = await getCatalogPageData(categoryId)
-                // console.log("PRinting res: ", res);
-                setCatalogPageData(res);
-            }catch(error){
-                console.log(error)    
+        const getCategoryDetails = async () => {
+            try {
+              const res = await getCatalogPageData(categoryId);
+              console.log("Printing res: ", res); // This should now print the correct response
+              setCatalogPageData(res);
+            } catch (err) {
+              console.log("Error while calling getCatalogPageData:", err);
             }
-        }
+          };
+          
         if(categoryId) {
             getCategoryDetails();
         }

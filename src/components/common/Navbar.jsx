@@ -39,9 +39,20 @@ const Navbar = () => {
   const fetchSublinks = async()=>{
     try{
       
-      const result = await apiConnector("GET",categories.CATEGORIES_API);
-      // console.log(result)
-      setSubLink(result.data?.allTags);
+      const url = categories.CATEGORIES_API;  // Get the final URL
+        console.log('Final URL:', url);  // Log the full URL
+        
+        const result = await apiConnector('GET', url);
+        console.log('API Response:', result);  // Log the full response to inspect data
+
+        if (result && result.data && result.data.allTags) {
+            console.log('Fetched Tags:', result.data.allTags);
+            setSubLink(result.data.allTags);  // Set the fetched tags
+        } else {
+            console.log('No tags found in response');
+            toast.error("No categories found");
+        }
+      // setSubLink(result.data?.allTags);
       
     }catch(error){
       // console.log(error)
@@ -51,6 +62,7 @@ const Navbar = () => {
   }
 
   useEffect(()=>{
+    console.log("Fetching sublinks");
     fetchSublinks()
   },[])
 
@@ -85,10 +97,11 @@ const Navbar = () => {
                   }`}>
                     <p>{link.title}</p>
                     <AiOutlineDown/>
-                    <div className="invisible absolute left-[50%] translate-x-[-50%] translate-y-[20%] top-[50%] flex flex-col rounded-md bg-richblack-50 text-richblack-900 p-4 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:w-[300px] z-10">
+                    {/* invisible */}
+                    <div className="invisible absolute left-[50%] translate-x-[-50%] translate-y-[20%] top-[50%] flex flex-col rounded-md bg-richblack-50 text-richblack-900 p-4 opacity-100 transition-all duration-200 group-hover:visible group-hover:opacity-100 lg:w-[300px] z-10 ">
                       <div className="absolute left-[50%] translate-x-[80%] translate-y-[-45%] top-0 h-6 w-6 rotate-45 rounded bg-richblack-50 "></div>
                         {
-                          subLink.length?(
+                          subLink?.length?(
                             subLink.map((link,index)=>(
                             <Link key={index}
                             to={`/catalog/${link.name
@@ -97,7 +110,7 @@ const Navbar = () => {
                               .toLowerCase()}`}
                             >
                               
-                            <p className="px-8 py-4 border-b border-richblack-100">{link.name}</p>
+                            <p className="px-8 py-2 border-b border-richblack-100">{link.name}</p>
                         
                             </Link>
                           ))):(

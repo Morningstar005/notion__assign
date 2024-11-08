@@ -5,21 +5,24 @@ require("dotenv").config()
 const mailSender=async (email,title,body)=>{
    try{
     let transporter = Nodemailer.createTransport({
-        host:process.env.MAIL_HOST,
-        auth:{
-            user:process.env.MAIL_USER,
-            pass:process.env.MAIL_PASS
+        host: 'smtp.gmail.com',
+        port: 465,
+        secure: true,
+        auth: {
+            user: process.env.MAIL_USER,
+            pass: process.env.MAIL_PASS
         },
-     
-    })
+        logger: true
+    });
+    
     let info = await transporter.sendMail({
-        from:`StudyNotion - By Hemant Bhatagar`,
+        from: `"StudyNotion - By Hemant Bhatnagar" <${process.env.MAIL_USER}>`,
         to: `${email}`,
         subject: `${title}`,
         html:`${body}`,
     })
 
-    // console.log("INFO", info);
+    console.log("INFO", info);
     return info;
 
     

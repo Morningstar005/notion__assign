@@ -14,6 +14,7 @@ const {
 
 export function sendOtp(email,navigate){
     return async(dispatch)=>{
+        console.log('email',email)
         const toastId=toast.loading("Loading...")
         dispatch(setLoading(true))
         try{
@@ -24,12 +25,12 @@ export function sendOtp(email,navigate){
                 email,
                 checkUserPresent:true,
             })
-            // console.log("SENDOTP API RESPONSE.......",response)
+            console.log("SENDOTP API RESPONSE.......",response)
             // console.log(response.data.message)
 
-            // if(!response.data.message){
-            //     throw new Error(response.data.message)
-            // }
+            if(!response.data.message){
+                throw new Error(response.data.message)
+            }
 
             toast.success("OTP Sent Successfully")
             navigate("/verify-email")
@@ -58,6 +59,14 @@ export function signUp(
         const toastId = toast.loading("Loading...")
         dispatch(setLoading(true))
         try{
+            console.log( accountType,
+                firstName,
+                lastName,
+                email,
+                password,
+                confirmPassword,
+                otp,
+                )
             const response = await apiConnector("POST",SIGN_API,{
                 accountType,
                 firstName,
